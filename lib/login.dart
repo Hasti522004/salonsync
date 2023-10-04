@@ -37,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(
                   height: 30,
+                  width: 20,
                 ),
                 TextField(
                   decoration: InputDecoration(
