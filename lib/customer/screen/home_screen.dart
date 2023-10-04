@@ -46,10 +46,14 @@ class _Home_ScreenState extends State<Home_Screen> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                              child: Text('Hello'),
-                              color: Color.fromARGB(255, 72, 72, 70),
-                              height: 200,
-                              width: 200,
+                              height: 30,
+                              width: 30,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          'assets/images/google_logo.png'),
+                                      fit: BoxFit.cover),
+                                  shape: BoxShape.circle),
                             ),
                           ),
                           Column(
