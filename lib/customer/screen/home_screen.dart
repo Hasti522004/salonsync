@@ -37,7 +37,8 @@ class _Home_ScreenState extends State<Home_Screen> {
             child: ListView(
               children: [
                 Container(
-                  height: 200,
+                  height: MediaQuery.of(context).size.height *
+                      0.25, //change height = 200
                   child: Card(
                       color: Color.fromARGB(57, 123, 120, 121),
                       child: Row(
@@ -46,35 +47,86 @@ class _Home_ScreenState extends State<Home_Screen> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                              height: 30,
-                              width: 30,
+                              height: 175,
+                              width: 170,
                               decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/google_logo.png'),
-                                      fit: BoxFit.cover),
-                                  shape: BoxShape.circle),
+                                image: DecorationImage(
+                                    image:
+                                        AssetImage('assets/images/first.jpg'),
+                                    fit: BoxFit.cover),
+                                shape: BoxShape.rectangle,
+                              ),
                             ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Bonanza",
-                                style: TextStyle(
-                                    fontSize: 70, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                'Kalavad Road, Rajkot',
-                                style: TextStyle(
-                                  fontSize: 30,
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Bonanza",
+                                  style: TextStyle(
+                                      fontSize: 65,
+                                      fontFamily: 'RobotoMono',
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                              Column(
-                                children: [],
-                              )
-                            ],
+                                Text(
+                                  'Kalavad Road, Rajkot',
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons
+                                          .star, // You can customize this icon as needed
+                                      color: Colors
+                                          .yellow, // Customize the star color
+                                      size: 24, // Customize the star size
+                                    ),
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.yellow,
+                                      size: 24,
+                                    ),
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.yellow,
+                                      size: 24,
+                                    ),
+                                    Icon(
+                                      Icons.star_half,
+                                      color: Colors.yellow,
+                                      size: 24,
+                                    ),
+                                    Icon(
+                                      Icons.star_border,
+                                      color: Colors.yellow,
+                                      size: 24,
+                                    ),
+                                    SizedBox(
+                                        width:
+                                            18), // Add some spacing between the star and the like button
+                                    Icon(
+                                      Icons
+                                          .favorite_border, // Customize this icon as needed
+                                      color: Color.fromARGB(255, 12, 8,
+                                          8), // Customize the like button color
+                                      size:
+                                          24, // Customize the like button size
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           )
                         ],
                       )),
