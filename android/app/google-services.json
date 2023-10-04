@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "469548957575",
+    "project_id": "salonsync-881d0",
+    "storage_bucket": "salonsync-881d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:469548957575:android:86885a87a358797a69dd22",
+        "android_client_info": {
+          "package_name": "com.example.salonsync"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcpE1fBLeTI6e3X6AarxOl1QK-d_0JNJk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
