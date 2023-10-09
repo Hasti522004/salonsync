@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:salonsync/customer/model/salon_card.dart';
+import 'package:salonsync/customer/model/treatment_card.dart';
 
-class Home_Screen extends StatefulWidget {
-  const Home_Screen({super.key});
+class ServicesScreen extends StatefulWidget {
+  const ServicesScreen({super.key});
 
   @override
-  State<Home_Screen> createState() => _Home_ScreenState();
+  State<ServicesScreen> createState() => _ServicesScreenState();
 }
 
-class _Home_ScreenState extends State<Home_Screen> {
+class _ServicesScreenState extends State<ServicesScreen> {
   @override
   Widget build(BuildContext context) {
     List<Widget> cardWidgets = [];
     for (int i = 0; i < 20; i++) {
-      SalonCard card = SalonCard(
-        image: 'assets/images/first.jpg',
-        salonName: 'Salon $i',
-        address: 'Address $i',
-        rating: 4.5,
-        likeCount: 10,
+      TreatmentCard card = TreatmentCard(
+        image: 'assets/images/treatment-2.jpeg',
+        treatmentName: 'Treatment $i',
+        details: 'Details $i',
+        price: 100,
       );
 
       cardWidgets.add(card.buildCardWidget(context));
