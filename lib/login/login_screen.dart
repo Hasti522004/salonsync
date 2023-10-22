@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:salonsync/login/verification_screen.dart';
 
-class LoginUsingPhone extends StatefulWidget {
-  const LoginUsingPhone({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
   static String verify = "";
   @override
-  State<LoginUsingPhone> createState() => _LoginUsingPhoneState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginUsingPhoneState extends State<LoginUsingPhone> {
+class _LoginScreenState extends State<LoginScreen> {
   TextEditingController countryController = TextEditingController();
   var phone = "";
 
@@ -112,7 +112,7 @@ class _LoginUsingPhoneState extends State<LoginUsingPhone> {
                             (PhoneAuthCredential credential) {},
                         verificationFailed: (FirebaseAuthException e) {},
                         codeSent: (String verificationId, int? resendToken) {
-                          LoginUsingPhone.verify = verificationId;
+                          LoginScreen.verify = verificationId;
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => MyVerify()));
                         },

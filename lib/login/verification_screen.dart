@@ -109,10 +109,8 @@ class _MyVerifyState extends State<MyVerify> {
                       try {
                         PhoneAuthCredential credential =
                             PhoneAuthProvider.credential(
-                                verificationId: LoginUsingPhone.verify,
+                                verificationId: LoginScreen.verify,
                                 smsCode: code);
-
-                        // Sign the user in (or link) with the credential
                         await auth.signInWithCredential(credential);
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
