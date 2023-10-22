@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:salonsync/customer/screen/booking_screen.dart';
 import 'package:salonsync/customer/screen/home_screen.dart';
-import 'package:salonsync/customer/screen/payment_screen.dart';
+import 'package:salonsync/customer/screen/treatment_screen.dart';
 
 class CommonBottomNavigationScreen extends StatefulWidget {
   const CommonBottomNavigationScreen({Key? key}) : super(key: key);
@@ -24,9 +24,6 @@ class _CommonBottomNavigationScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Your App Title'),
-      ),
       body: _getPage(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -54,7 +51,7 @@ class _CommonBottomNavigationScreenState
       case 0:
         return HomeScreen(); // Create a HomeScreen widget.
       case 1:
-        return PaymentHistory(); // Create a SettingsScreen widget.
+        return TreatmentScreen(); // Create a SettingsScreen widget.
       case 2:
         return AppoinmentBooking(); // Create a ProfileScreen widget.
       default:

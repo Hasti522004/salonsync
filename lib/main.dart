@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:salonsync/customer/model/bottom_navigationbar.dart';
-import 'package:salonsync/customer/screen/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
