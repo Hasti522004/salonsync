@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+// import 'package:lottie/lottie.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -9,102 +9,99 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool passwordVisible = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 78, 75, 75),
-        body: Padding(
-          padding: const EdgeInsets.all(50.0),
-          child: Center(
-            child: Card(
-              color: Color.fromARGB(255, 214, 199, 209),
-              child: Padding(
-                padding: const EdgeInsets.all(50.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Sign Up', // Replace with your desired title
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        labelText: "Email ID",
-                        labelStyle: TextStyle(fontFamily: 'Times New Roman'),
-                        border: UnderlineInputBorder(),
-                      ),
-                    ),
-                    TextField(
-                      obscureText: passwordVisible,
-                      decoration: InputDecoration(
-                          labelText: "Password",
-                          labelStyle: TextStyle(fontFamily: 'Times New Roman'),
-                          border: UnderlineInputBorder(),
-                          suffixIcon: IconButton(
-                              onPressed: () {
-                                passwordVisible = !passwordVisible;
-                                setState(() {});
-                              },
-                              icon: Icon(passwordVisible
-                                  ? Icons.visibility_off
-                                  : Icons.visibility))),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    MaterialButton(
-                      color: Color.fromARGB(255, 129, 129, 129),
-                      elevation: 10,
-                      minWidth: 200.0,
-                      onPressed: () {},
-                      child: Text(
-                        'Sign Up',
-                        style: TextStyle(color: Color.fromRGBO(14, 11, 11, 1)),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    MaterialButton(
-                      color: Color.fromARGB(255, 129, 129, 129),
-                      elevation: 10,
-                      minWidth: 200.0,
-                      onPressed: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 30,
-                            width: 30,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        'assets/images/google_logo.png'),
-                                    fit: BoxFit.cover),
-                                shape: BoxShape.circle),
-                          ),
-                          SizedBox(width: 10),
-                          Text("Sign In with Google"),
-                        ],
-                      ),
-                    ),
-                  ],
+      backgroundColor: Colors.black,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Lottie.asset('assets/LottieLogo1.json'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Color.fromARGB(255, 56, 118, 77),
+                labelText: "UserName",
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    width: 3,
+                    color: Color.fromARGB(255, 64, 116, 92),
+                  ),
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
               ),
             ),
           ),
-        ));
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Color.fromARGB(255, 56, 118, 77),
+                labelText: "Password",
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    width: 3,
+                    color: Color.fromARGB(255, 64, 116, 92),
+                  ),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 15),
+          Container(
+            width: 250,
+            height: 50,
+            child: ElevatedButton(
+              onPressed: () {},
+              child: Text(
+                'Sign in',
+                style: TextStyle(color: Colors.black),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 64, 116, 92),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 250,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Row(
+                    children: [
+                      Image.asset(
+                          'assets/images/google_logo.png'), // Add the Google logo image
+                      SizedBox(width: 10), // Add some spacing
+                      Text(
+                        'Sign in with Google',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ],
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 64, 116,
+                        92), // Change the background color to white
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
