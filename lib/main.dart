@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:salonsync/customer/screen/booking_screen.dart';
+import 'package:salonsync/customer/model/bottom_navigationbar.dart';
+import 'package:salonsync/customer/screen/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: AppoinmentBookingScreen(),
+      home: CommonBottomNavigationScreen(),
     );
   }
 }

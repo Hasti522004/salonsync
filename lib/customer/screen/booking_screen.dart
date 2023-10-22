@@ -1,153 +1,95 @@
-import 'package:calendar_flutter_aj/calender_flutter.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:salonsync/customer/screen/payment_screen.dart';
+import 'package:table_calendar/table_calendar.dart';
 
-class TimeSlot {
-  final String time;
-
-  TimeSlot(this.time);
-}
-
-class AppoinmentBookingScreen extends StatefulWidget {
-  AppoinmentBookingScreen({super.key});
+class AppoinmentBooking extends StatefulWidget {
+  AppoinmentBooking({super.key});
 
   @override
-  State<AppoinmentBookingScreen> createState() =>
-      _AppoinmentBookingScreenState();
+  State<AppoinmentBooking> createState() => _AppoinmentBookingState();
 }
 
-class _AppoinmentBookingScreenState extends State<AppoinmentBookingScreen> {
-  List<TimeSlot> timeSlots = [
-    TimeSlot("10:00 AM"),
-    TimeSlot("11:00 AM"),
-    TimeSlot("12:00 PM"),
-    // Add more time slots as needed
+class _AppoinmentBookingState extends State<AppoinmentBooking> {
+  final List<String> timeSlots = [
+    '10:00 AM',
+    '11:00 AM',
+    '12:00 PM',
+    '1:00 PM',
+    '2:00 PM',
+    '3:00 PM',
+    '4:00 PM',
+    '5:00 PM',
+    '6:00 PM',
   ];
 
-  TimeSlot? selectedSlot;
-
-  DateTime? calenderSelectedDate = DateTime.now();
+  DateTime today = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Calender Flutter AJ',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Appoinment Booking System"),
-          backgroundColor: Colors.deepPurple,
-        ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CalendarFlutterAj(
-                selectedDate: (selectedDate) {
-                  calenderSelectedDate = selectedDate;
-                  if (kDebugMode) {
-                    print(selectedDate);
-                  }
-                },
-                backArrow: const DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Color(0xffAED2EC),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.arrow_left_rounded,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                ),
-                forwardArrow: const DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Color(0xffAED2EC),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.arrow_right_rounded,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                ),
-                calenderBackgroundColor: Colors.white,
-                showCalenderGradient: true,
-                showMonthGradient: true,
-                showYearGradient: true,
-                dividerColor: Colors.white,
-                selectedDayColor: Colors.white,
-                selectedDayWidget: Text(
-                  calenderSelectedDate!.day.toString(),
-                  style: const TextStyle(color: Colors.white),
-                ),
-                calenderGradient: const LinearGradient(
-                  colors: [
-                    Color(0xff5F94B9),
-                    Color(0xff6094BA),
-                    Color(0xff85A3CB),
-                    Color(0xff8DA4CE),
-                    Color(0xff8898CE),
-                    Color(0xff8395CD),
-                  ],
-                ),
-                yearGradient: const LinearGradient(
-                  colors: [
-                    Color(0xff5F94B9),
-                    Color(0xff6094BA),
-                    Color(0xff85A3CB),
-                    Color(0xff8DA4CE),
-                    Color(0xff8898CE),
-                    Color(0xff8395CD),
-                  ],
-                ),
-                monthGradient: const LinearGradient(
-                  colors: [
-                    Color(0xff5F94B9),
-                    Color(0xff6094BA),
-                    Color(0xff85A3CB),
-                    Color(0xff8DA4CE),
-                    Color(0xff8898CE),
-                    Color(0xff8395CD),
-                  ],
-                ),
-                calenderSelectedDateBackgroundcolor: Colors.purple,
-                showCalenderSelectedDateBackgroundcolor: true,
-                calenderSelectedDateColor: Colors.white,
-                calenderSelectedDateFontSize: 18,
-                calenderSelectedDateBorderRadius: BorderRadius.circular(50),
-                dayTextStyle: const TextStyle(
-                  color: Colors.white,
-                ),
-                monthBackgroundColor: Colors.black,
-                monthTextStyle: const TextStyle(
-                  color: Colors.white,
-                ),
-                weekdaysTextStyle: const TextStyle(
-                  color: Colors.white,
-                ),
-                yearBackgroundColor: Colors.black,
-                yearTextStyle: const TextStyle(
-                  color: Colors.white,
-                ),
-                calenderUnSelectedDatesColor: Colors.white,
-                yearPopHeadingText: "year",
-                yearPopHeadingTextStyle: const TextStyle(
-                  color: Colors.white,
-                ),
-                yearsListTextStyle: const TextStyle(
-                  color: Colors.white,
-                ),
-                monthPopHeadingText: "month",
-                monthPopHeadingTextStyle: const TextStyle(
-                  color: Colors.white,
-                ),
-                monthsListTextStyle: const TextStyle(
-                  color: Colors.white,
-                ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Appointment Booking'),
+      ),
+      body: content(),
+    );
+  }
+
+  Widget content() {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            child: TableCalendar(
+              rowHeight: 43,
+              headerStyle: HeaderStyle(formatButtonVisible: false),
+              focusedDay: DateTime.now(),
+              firstDay: DateTime.utc(
+                DateTime.now().year,
+                DateTime.now().month,
+                DateTime.now().day,
               ),
+              lastDay: DateTime.utc(2030, 3, 14),
             ),
-          ],
-        ),
+          ),
+          Divider(
+            height: 20,
+            color: Colors.black,
+            thickness: 2, // Adjust the thickness of the line
+          ),
+
+          SizedBox(height: 20), // Add some spacing
+          Wrap(
+            alignment: WrapAlignment.spaceAround,
+            spacing: 20, // Horizontal space between boxes
+            runSpacing: 20, // Vertical space between rows of boxes
+            children: timeSlots.map((timeSlot) {
+              return Container(
+                width: 90,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  border: Border.all(color: Colors.grey),
+                  color: Color.fromARGB(255, 255, 255, 255),
+                ),
+                padding: EdgeInsets.all(8),
+                child: Text(
+                  timeSlot,
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => PaymentHistory()),
+              );
+            },
+            child: Text('Payment'),
+          ),
+        ],
       ),
     );
   }
