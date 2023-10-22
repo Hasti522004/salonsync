@@ -1,106 +1,112 @@
 import 'package:flutter/material.dart';
-// import 'package:lottie/lottie.dart';
+import 'package:lottie/lottie.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginUsingPhone extends StatefulWidget {
+  const LoginUsingPhone({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginUsingPhone> createState() => _LoginUsingPhoneState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginUsingPhoneState extends State<LoginUsingPhone> {
+  TextEditingController countryController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    countryController.text = "+91";
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Lottie.asset('assets/LottieLogo1.json'),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Color.fromARGB(255, 56, 118, 77),
-                labelText: "UserName",
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 3,
-                    color: Color.fromARGB(255, 64, 116, 92),
-                  ),
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Color.fromARGB(255, 56, 118, 77),
-                labelText: "Password",
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 3,
-                    color: Color.fromARGB(255, 64, 116, 92),
-                  ),
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 15),
-          Container(
-            width: 250,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: () {},
-              child: Text(
-                'Sign in',
-                style: TextStyle(color: Colors.black),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 64, 116, 92),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 15),
-          Row(
+      body: Container(
+        margin: EdgeInsets.only(left: 25, right: 25),
+        alignment: Alignment.center,
+        child: SingleChildScrollView(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Lottie.asset('assets/animation/animation_login.json'),
+              SizedBox(
+                height: 25,
+              ),
+              Text(
+                "Phone Verification",
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "We need to register your phone without getting started!",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 30,
+              ),
               Container(
-                width: 250,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Row(
-                    children: [
-                      Image.asset(
-                          'assets/images/google_logo.png'), // Add the Google logo image
-                      SizedBox(width: 10), // Add some spacing
-                      Text(
-                        'Sign in with Google',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ],
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 64, 116,
-                        92), // Change the background color to white
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                height: 55,
+                decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.grey),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 10,
                     ),
-                  ),
+                    SizedBox(
+                      width: 40,
+                      child: TextField(
+                        controller: countryController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      "|",
+                      style: TextStyle(fontSize: 33, color: Colors.grey),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                        child: TextField(
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Phone",
+                      ),
+                    ))
+                  ],
                 ),
               ),
+              SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: 45,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.green.shade600,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'verify');
+                    },
+                    child: Text("Send the code")),
+              )
             ],
           ),
-        ],
+        ),
       ),
     );
   }
