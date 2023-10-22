@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pinput/pinput.dart';
+import 'package:salonsync/customer/model/bottom_navigationbar.dart';
+import 'package:salonsync/login/login_screen.dart';
 
 class MyVerify extends StatefulWidget {
   const MyVerify({Key? key}) : super(key: key);
@@ -10,6 +13,7 @@ class MyVerify extends StatefulWidget {
 }
 
 class _MyVerifyState extends State<MyVerify> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
@@ -35,7 +39,7 @@ class _MyVerifyState extends State<MyVerify> {
         color: Color.fromRGBO(234, 239, 243, 1),
       ),
     );
-
+    var code = "";
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -84,7 +88,9 @@ class _MyVerifyState extends State<MyVerify> {
                 // defaultPinTheme: defaultPinTheme,
                 // focusedPinTheme: focusedPinTheme,
                 // submittedPinTheme: submittedPinTheme,
-
+                onChanged: (value) {
+                  code = value;
+                },
                 showCursor: true,
                 onCompleted: (pin) => print(pin),
               ),
@@ -99,7 +105,22 @@ class _MyVerifyState extends State<MyVerify> {
                         primary: Colors.green.shade600,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
-                    onPressed: () {},
+                    onPressed: () async {
+                      try {
+                        PhoneAuthCredential credential =
+                            PhoneAuthProvider.credential(
+                                verificationId: LoginUsingPhone.verify,
+                                smsCode: code);
+
+                        // Sign the user in (or link) with the credential
+                        await auth.signInWithCredential(credential);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                CommonBottomNavigationScreen()));
+                      } catch (e) {
+                        print("wrong OTP");
+                      }
+                    },
                     child: Text("Verify Phone Number")),
               ),
               Row(
