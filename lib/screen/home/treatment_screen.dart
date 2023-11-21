@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:salonsync/customer/model/treatment_card.dart';
+import 'package:salonsync/model/treatment_card.dart';
 
 class TreatmentScreen extends StatefulWidget {
   const TreatmentScreen({Key? key});

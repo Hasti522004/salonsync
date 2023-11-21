@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:salonsync/customer/screen/payment_screen.dart';
+import 'package:salonsync/screen/payment/payment_screen.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class AppoinmentBooking extends StatefulWidget {

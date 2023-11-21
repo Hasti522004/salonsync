@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:salonsync/customer/screen/booking_screen.dart';
-import 'package:salonsync/customer/screen/home_screen.dart';
-import 'package:salonsync/customer/screen/treatment_screen.dart';
+import 'package:salonsync/screen/booking/booking_screen.dart';
+import 'package:salonsync/screen/home/home_screen.dart';
+import 'package:salonsync/screen/home/treatment_screen.dart';
 
 class CommonBottomNavigationScreen extends StatefulWidget {
   const CommonBottomNavigationScreen({Key? key}) : super(key: key);

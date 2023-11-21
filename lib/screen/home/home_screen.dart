@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:salonsync/customer/model/salon_card.dart';
+import 'package:salonsync/model/salon_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
