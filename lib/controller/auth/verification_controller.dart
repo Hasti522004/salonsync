@@ -2,7 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:salonsync/model/bottom_navigationbar.dart';
+import 'package:salonsync/screen/home/home_screen.dart';
 
 class VerifyController extends GetxController {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -17,7 +17,7 @@ class VerifyController extends GetxController {
       );
       await auth.signInWithCredential(credential);
       // Use Get.offAll for navigation without the ability to go back
-      Get.offAll(() => CommonBottomNavigationScreen());
+      Get.offAll(() => HomeScreen());
     } catch (e) {
       print("Verification ID: $verificationId");
       print("Entered OTP: $code");

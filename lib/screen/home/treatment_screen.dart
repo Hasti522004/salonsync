@@ -1,93 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:salonsync/model/treatment_card.dart';
+import 'package:get/get.dart';
+import 'package:salonsync/controller/screen_controller/bottom_navbar_index_controller.dart';
+import 'package:salonsync/controller/screen_controller/treatment_controller.dart';
+import 'package:salonsync/widgets/common_app_bar.dart';
+import 'package:salonsync/widgets/common_bottom_navigation_bar.dart';
 
-class TreatmentScreen extends StatefulWidget {
-  const TreatmentScreen({Key? key});
-
-  @override
-  State<TreatmentScreen> createState() => _TreatmentScreenState();
-}
-
-class _TreatmentScreenState extends State<TreatmentScreen> {
-  List<Widget> cardList = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _generateCards();
-  }
-
-  void _generateCards() {
-    int numCards = 7;
-
-    for (int i = 1; i <= numCards; i += 2) {
-      String image = 'assets/images/treatment-2.jpeg';
-      String treatmentName1 = 'Treatment $i';
-      double price1 = 400;
-
-      String treatmentName2 = 'Treatment ${i + 1}';
-      double price2 = 500;
-
-      if (numCards % 2 != 0 && i == numCards) {
-        cardList.add(
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TreatmentCard(
-                    image: image,
-                    treatmentName: treatmentName1,
-                    price: price1,
-                  ).buildCardWidget(),
-                ),
-                SizedBox(width: 8.0),
-                Expanded(
-                  child: Card(),
-                ),
-              ],
-            ),
-          ),
-        );
-      } else {
-        cardList.add(
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TreatmentCard(
-                    image: image,
-                    treatmentName: treatmentName1,
-                    price: price1,
-                  ).buildCardWidget(),
-                ),
-                SizedBox(width: 8.0),
-                Expanded(
-                  child: TreatmentCard(
-                    image: image,
-                    treatmentName: treatmentName2,
-                    price: price2,
-                  ).buildCardWidget(),
-                ),
-              ],
-            ),
-          ),
-        );
-      }
-    }
-  }
+class TreatmentScreen extends StatelessWidget {
+  final _BottomNavbarIndexController = Get.find<BottomNavbarIndexController>();
+  final TreatmentController controller = Get.put(TreatmentController());
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Treatment Screen'),
+    final Map<String, dynamic> args = Get.arguments;
+    final String salonName = args['salonName'];
+
+    return Scaffold(
+      appBar: CommonAppBar(
+        title: '$salonName',
+      ),
+      body: Obx(
+        () => ListView(
+          children: controller.cardList,
         ),
-        body: ListView(
-          children: cardList,
-        ),
+      ),
+      bottomNavigationBar: CommonBottomNavigationBar(
+        currentIndex: _BottomNavbarIndexController.currentIndex.value,
+        onTap: (index) {
+          _BottomNavbarIndexController.currentIndex.value = index;
+        },
       ),
     );
   }

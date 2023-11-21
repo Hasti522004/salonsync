@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:salonsync/screen/payment/payment_screen.dart';
+import 'package:get/get.dart';
+import 'package:salonsync/controller/screen_controller/bottom_navbar_index_controller.dart';
+import 'package:salonsync/route/route.dart';
+import 'package:salonsync/widgets/common_app_bar.dart';
+import 'package:salonsync/widgets/common_bottom_navigation_bar.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class AppoinmentBooking extends StatefulWidget {
-  AppoinmentBooking({super.key});
+class AppoinmentBooking extends StatelessWidget {
+  AppoinmentBooking({Key? key}) : super(key: key);
+  final BottomNavbarIndexController _bottomNavbarIndexController =
+      Get.find<BottomNavbarIndexController>();
 
-  @override
-  State<AppoinmentBooking> createState() => _AppoinmentBookingState();
-}
-
-class _AppoinmentBookingState extends State<AppoinmentBooking> {
   final List<String> timeSlots = [
     '10:00 AM',
     '11:00 AM',
@@ -27,10 +28,16 @@ class _AppoinmentBookingState extends State<AppoinmentBooking> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Appointment Booking'),
+      appBar: CommonAppBar(
+        title: 'Appointment Booking',
       ),
       body: content(),
+      bottomNavigationBar: CommonBottomNavigationBar(
+        currentIndex: _bottomNavbarIndexController.currentIndex.value,
+        onTap: (index) {
+          _bottomNavbarIndexController.currentIndex.value = index;
+        },
+      ),
     );
   }
 
@@ -83,9 +90,7 @@ class _AppoinmentBookingState extends State<AppoinmentBooking> {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => PaymentHistory()),
-              );
+              Get.toNamed(AppRoutes.paymentScreen);
             },
             child: Text('Payment'),
           ),

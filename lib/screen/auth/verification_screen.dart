@@ -11,7 +11,7 @@ class MyVerify extends StatelessWidget {
   MyVerify({Key? key}) : super(key: key);
   final VerifyController _verificationController = Get.find<VerifyController>();
   var code = "".obs; // Make code an observable
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +60,7 @@ class MyVerify extends StatelessWidget {
               Pinput(
                 length: 6,
                 onChanged: (value) {
-                   _verificationController.code.value = value;
+                  _verificationController.code.value = value;
                 },
                 showCursor: true,
                 onCompleted: (pin) => print(pin),
@@ -80,7 +80,8 @@ class MyVerify extends StatelessWidget {
                   ),
                   onPressed: () async {
                     try {
-                      _verificationController.signInWithPhoneNumber(LoginScreen.verify, code.value);
+                      _verificationController.signInWithPhoneNumber(
+                          LoginScreen.verify, code.value);
                     } catch (e) {
                       print("Wrong OTP");
                     }
@@ -92,11 +93,7 @@ class MyVerify extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        'phone',
-                        (route) => false,
-                      );
+                      Get.back();
                     },
                     child: Text(
                       "Edit Phone Number ?",

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:salonsync/model/salon_card.dart';
+import 'package:get/get.dart';
+import 'package:salonsync/controller/screen_controller/bottom_navbar_index_controller.dart';
+import 'package:salonsync/model/salon_card_model.dart';
+import 'package:salonsync/screen/home/treatment_screen.dart';
+import 'package:salonsync/widgets/common_app_bar.dart';
+import 'package:salonsync/widgets/common_bottom_navigation_bar.dart';
+import 'package:salonsync/widgets/salon_card.dart';
+import 'package:salonsync/widgets/sidebar_widget.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
+class HomeScreen extends StatelessWidget {
+  final _BottomNavbarIndexController = Get.find<BottomNavbarIndexController>();
 
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     List<Widget> cardWidgets = [];
@@ -18,30 +21,26 @@ class _HomeScreenState extends State<HomeScreen> {
         address: 'Address $i',
         rating: 4.5,
         likeCount: 10,
+        onTap: () {
+          // Navigate to TreatmentScreen and pass salon details
+          Get.to(
+            () => TreatmentScreen(),
+            arguments: {'salonName': 'Salon $i'},
+          );
+        },
       );
-      cardWidgets.add(card.buildCardWidget(context));
+      cardWidgets.add(SalonbuildCardWidget(context, card, () {
+        Get.to(
+            () => TreatmentScreen(),
+            arguments: {'salonName': 'Salon $i'},
+          );
+        print('Salon card tapped!');
+      }));
     }
-    return MaterialApp(
-        home: Scaffold(
-      appBar: AppBar(
-        title: Text("Salon-List"),
-        leading: Icon(Icons.menu),
-        backgroundColor: Color.fromARGB(255, 78, 75, 75),
-        // elevation: 10.0,// for shadow effect
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: IconButton(
-              icon: Icon(Icons.more_vert),
-              onPressed: () {},
-            ),
-          )
-        ],
-      ),
+
+    return Scaffold(
+      appBar: CommonAppBar(title: "Salon-List"),
+      drawer: CommonDrawer(),
       body: Column(
         children: [
           Expanded(
@@ -51,6 +50,12 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-    ));
+      bottomNavigationBar: CommonBottomNavigationBar(
+        currentIndex: _BottomNavbarIndexController.currentIndex.value,
+        onTap: (index) {
+          _BottomNavbarIndexController.currentIndex.value = index;
+        },
+      ),
+    );
   }
 }

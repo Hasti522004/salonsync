@@ -1,24 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:salonsync/model/salon_card_model.dart';
 
-class SalonCard {
-  final String image;
-  final String salonName;
-  final String address;
-  final double rating;
-  final int likeCount;
+Widget SalonbuildCardWidget(
+    BuildContext context, SalonCard salonCard, VoidCallback onTap) {
+  double screenWidth = MediaQuery.of(context).size.width;
 
-  SalonCard({
-    required this.image,
-    required this.salonName,
-    required this.address,
-    required this.rating,
-    required this.likeCount,
-  });
-
-  Widget buildCardWidget(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    return Container(
+  return GestureDetector(
+    onTap: onTap, // Handle the tap event
+    child: Container(
       height: MediaQuery.of(context).size.height * 0.25,
       child: Card(
         color: Color.fromARGB(57, 123, 120, 121),
@@ -32,7 +21,7 @@ class SalonCard {
                 width: screenWidth * 0.4,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(image),
+                    image: AssetImage(salonCard.image),
                     fit: BoxFit.cover,
                   ),
                   shape: BoxShape.rectangle,
@@ -49,7 +38,7 @@ class SalonCard {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    salonName,
+                    salonCard.salonName,
                     style: TextStyle(
                       fontSize: 20,
                       fontFamily: 'RobotoMono',
@@ -57,7 +46,7 @@ class SalonCard {
                     ),
                   ),
                   Text(
-                    address,
+                    salonCard.address,
                     style: TextStyle(
                       fontSize: 10,
                     ),
@@ -99,7 +88,7 @@ class SalonCard {
                         size: 20,
                       ),
                       Text(
-                        '$likeCount',
+                        '${salonCard.likeCount}',
                         style: TextStyle(fontSize: 18),
                       ),
                     ],
@@ -110,6 +99,6 @@ class SalonCard {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
 }
