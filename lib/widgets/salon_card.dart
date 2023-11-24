@@ -21,7 +21,7 @@ Widget SalonbuildCardWidget(
                 width: screenWidth * 0.4,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(salonCard.image),
+                    image: NetworkImage(salonCard.image),
                     fit: BoxFit.cover,
                   ),
                   shape: BoxShape.rectangle,

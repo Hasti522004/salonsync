@@ -1,54 +1,65 @@
+// home_screen.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salonsync/controller/screen_controller/bottom_navbar_index_controller.dart';
 import 'package:salonsync/model/salon_card_model.dart';
 import 'package:salonsync/screen/home/treatment_screen.dart';
+import 'package:salonsync/services/firebase_operations.dart';
 import 'package:salonsync/widgets/common_app_bar.dart';
 import 'package:salonsync/widgets/common_bottom_navigation_bar.dart';
 import 'package:salonsync/widgets/salon_card.dart';
 import 'package:salonsync/widgets/sidebar_widget.dart';
 
 class HomeScreen extends StatelessWidget {
-  final _BottomNavbarIndexController = Get.find<BottomNavbarIndexController>();
+  final _BottomNavbarIndexController = Get.put(BottomNavbarIndexController());
+  final FirebaseOperation _firebaseFunctions = FirebaseOperation();
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> cardWidgets = [];
-    for (int i = 0; i < 20; i++) {
-      SalonCard card = SalonCard(
-        image: 'assets/images/first.jpg',
-        salonName: 'Salon $i',
-        address: 'Address $i',
-        rating: 4.5,
-        likeCount: 10,
-        onTap: () {
-          // Navigate to TreatmentScreen and pass salon details
-          Get.to(
-            () => TreatmentScreen(),
-            arguments: {'salonName': 'Salon $i'},
-          );
-        },
-      );
-      cardWidgets.add(SalonbuildCardWidget(context, card, () {
-        Get.to(
-            () => TreatmentScreen(),
-            arguments: {'salonName': 'Salon $i'},
-          );
-        print('Salon card tapped!');
-      }));
-    }
-
     return Scaffold(
       appBar: CommonAppBar(title: "Salon-List"),
       drawer: CommonDrawer(),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              children: cardWidgets,
-            ),
-          )
-        ],
+      body: FutureBuilder<List<Map<String, dynamic>>>(
+        future: _firebaseFunctions.fetchSalons(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text("Error: ${snapshot.error}");
+          } else {
+            List<Widget> cardWidgets = [];
+            for (var salon in snapshot.data!) {
+              SalonCard card = SalonCard(
+                image: salon['imageUrl'],
+                salonName: salon['salonName'] ?? 'Unknown Salon',
+                address: salon['address'] ?? 'Unknown Address',
+                rating: (salon['rating'] ?? 0).toDouble(),
+                likeCount: salon['likeCount'] ?? 0,
+                onTap: () {
+                  // Navigate to TreatmentScreen and pass salon details
+                  Get.to(
+                    () => TreatmentScreen(),
+                    arguments: {'salonName': salon['salonName']},
+                  );
+                },
+              );
+              cardWidgets.add(SalonbuildCardWidget(context, card, () {
+                Get.to(() => TreatmentScreen(),
+                    arguments: {'salonName': salon['salonName']});
+                print('Salon card tapped!');
+              }));
+            }
+            return Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    children: cardWidgets,
+                  ),
+                ),
+              ],
+            );
+          }
+        },
       ),
       bottomNavigationBar: CommonBottomNavigationBar(
         currentIndex: _BottomNavbarIndexController.currentIndex.value,

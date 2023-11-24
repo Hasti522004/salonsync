@@ -4,6 +4,7 @@ import 'package:salonsync/controller/screen_controller/bottom_navbar_index_contr
 import 'package:salonsync/route/route.dart';
 import 'package:salonsync/widgets/common_app_bar.dart';
 import 'package:salonsync/widgets/common_bottom_navigation_bar.dart';
+import 'package:salonsync/widgets/sidebar_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class AppoinmentBooking extends StatelessWidget {
@@ -31,6 +32,7 @@ class AppoinmentBooking extends StatelessWidget {
       appBar: CommonAppBar(
         title: 'Appointment Booking',
       ),
+      drawer: CommonDrawer(),
       body: content(),
       bottomNavigationBar: CommonBottomNavigationBar(
         currentIndex: _bottomNavbarIndexController.currentIndex.value,

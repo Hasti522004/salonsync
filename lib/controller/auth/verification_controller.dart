@@ -1,27 +1,27 @@
-// lib/controller/verify_controller.dart
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:salonsync/screen/home/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:salonsync/screen/auth/profile_screen.dart';
 
-class VerifyController extends GetxController {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  var code = "".obs;
+class VerificationController extends GetxController {
+  // Observable for the entered OTP
+  var otp = "".obs;
 
-  Future<void> signInWithPhoneNumber(
-      String verificationId, String value) async {
+  // Function to handle verification logic
+  Future<void> verifyOTP(String verificationId) async {
     try {
+      // Implement your verification logic here using the entered OTP (otp.value)
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationId,
-        smsCode: code.value, // Access the value property of the observable
+        smsCode: otp.value,
       );
-      await auth.signInWithCredential(credential);
-      // Use Get.offAll for navigation without the ability to go back
-      Get.offAll(() => HomeScreen());
+
+      await FirebaseAuth.instance.signInWithCredential(credential);
+
+      // If verification is successful, navigate to the profile screen
+      Get.offAll(ProfileScreen()); // Assuming you have a ProfileScreen defined
     } catch (e) {
-      print("Verification ID: $verificationId");
-      print("Entered OTP: $code");
-      print("Wrong OTP");
+      print("Error during OTP verification: $e");
+      // Handle the error as needed
     }
   }
 }

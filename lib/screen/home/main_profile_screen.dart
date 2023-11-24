@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:salonsync/controller/screen_controller/bottom_navbar_index_controller.dart';
 import 'package:salonsync/controller/screen_controller/profile_controller.dart';
 import 'package:salonsync/widgets/common_app_bar.dart';
+import 'package:salonsync/widgets/common_bottom_navigation_bar.dart';
+import 'package:salonsync/widgets/sidebar_widget.dart';
 import 'package:salonsync/widgets/textfeild_widget.dart';
 
-class ProfilePage extends StatelessWidget {
+class MainProfilePage extends StatelessWidget {
   // Initialize the controller using Get.put or Get.lazyPut
+  final _BottomNavbarIndexController = Get.find<BottomNavbarIndexController>();
   final EditProfileController editProfileController =
-      Get.find<EditProfileController>();
+      Get.put(EditProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +19,7 @@ class ProfilePage extends StatelessWidget {
       appBar: CommonAppBar(
         title: 'Profile',
       ),
+      drawer: CommonDrawer(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -67,6 +72,12 @@ class ProfilePage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: CommonBottomNavigationBar(
+        currentIndex: _BottomNavbarIndexController.currentIndex.value,
+        onTap: (index) {
+          _BottomNavbarIndexController.currentIndex.value = index;
+        },
       ),
     );
   }

@@ -5,7 +5,7 @@ Widget TreatmentbuildCardWidget(TreatmentCard tcard) {
   return Card(
     child: Column(
       children: [
-        Image.asset(
+        Image.network(
           tcard.image,
           height: 150.0,
           width: double.infinity,
@@ -21,6 +21,7 @@ Widget TreatmentbuildCardWidget(TreatmentCard tcard) {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Text('\$$tcard.price'),
+              Text('Duration: ${tcard.duration}'),
             ],
           ),
         ),

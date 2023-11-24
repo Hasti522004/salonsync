@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salonsync/model/treatment_card_model.dart';
+import 'package:salonsync/services/firebase_operations.dart';
 import 'package:salonsync/widgets/treatment_card.dart';
 
 class TreatmentController extends GetxController {
@@ -12,18 +13,29 @@ class TreatmentController extends GetxController {
     _generateCards();
   }
 
-  void _generateCards() {
-    int numCards = 7;
+  void _generateCards() async {
+    try {
+      // Fetch treatments from Firebase
+      List<Map<String, dynamic>> treatments =
+          await FirebaseOperation().fetchTreatments();
 
-    for (int i = 1; i <= numCards; i += 2) {
-      String image = 'assets/images/treatment-2.jpeg';
-      String treatmentName1 = 'Treatment $i';
-      double price1 = 400;
+      // Iterate through treatments and generate cards
+      for (int i = 0; i < treatments.length; i += 2) {
+        String image1 = treatments[i]['imageUrl'];
+        String treatmentName1 = treatments[i]['treatmentName'];
+        double price1 = treatments[i]['price'];
+        String duration1 = treatments[i]['duration'];
 
-      String treatmentName2 = 'Treatment ${i + 1}';
-      double price2 = 500;
+        String image2 =
+            (i + 1 < treatments.length) ? treatments[i + 1]['imageUrl'] : '';
+        String treatmentName2 = (i + 1 < treatments.length)
+            ? treatments[i + 1]['treatmentName']
+            : '';
+        double price2 =
+            (i + 1 < treatments.length) ? treatments[i + 1]['price'] : 0;
+        String duration2 =
+            (i + 1 < treatments.length) ? treatments[i + 1]['duration'] : '';
 
-      if (numCards % 2 != 0 && i == numCards) {
         cardList.add(
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
@@ -32,32 +44,10 @@ class TreatmentController extends GetxController {
                 Expanded(
                   child: TreatmentbuildCardWidget(
                     TreatmentCard(
-                      image: image,
+                      image: image1,
                       treatmentName: treatmentName1,
                       price: price1,
-                    ),
-                  ),
-                ),
-                SizedBox(width: 8.0),
-                Expanded(
-                  child: Card(),
-                ),
-              ],
-            ),
-          ),
-        );
-      } else {
-        cardList.add(
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TreatmentbuildCardWidget(
-                    TreatmentCard(
-                      image: image,
-                      treatmentName: treatmentName1,
-                      price: price1,
+                      duration: duration1,
                     ),
                   ),
                 ),
@@ -65,9 +55,10 @@ class TreatmentController extends GetxController {
                 Expanded(
                   child: TreatmentbuildCardWidget(
                     TreatmentCard(
-                      image: image,
+                      image: image2,
                       treatmentName: treatmentName2,
                       price: price2,
+                      duration: duration2,
                     ),
                   ),
                 ),
@@ -76,6 +67,8 @@ class TreatmentController extends GetxController {
           ),
         );
       }
+    } catch (e) {
+      print('Error fetching and generating treatment cards: $e');
     }
   }
 }

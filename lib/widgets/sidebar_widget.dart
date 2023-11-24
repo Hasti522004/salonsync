@@ -22,7 +22,7 @@ class CommonDrawer extends StatelessWidget {
                 ),
               ),
               buildDrawerItem('Profile', Icons.person, () {
-                Get.toNamed(AppRoutes.profilePage);
+                Get.toNamed(AppRoutes.mainprofilePage);
               }),
               buildDrawerItem('Theme', Icons.palette, () {
                 // Handle theme change
