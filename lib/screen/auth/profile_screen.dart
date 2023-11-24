@@ -14,7 +14,9 @@ class ProfileScreen extends StatelessWidget {
   final ProfileController _profileController = Get.find<ProfileController>();
   final LoginController _authController = Get.find<LoginController>();
   final ImagePicker _imagePicker = ImagePicker();
-
+  final FirebaseOperation firebaseOperation =
+      FirebaseOperation(); // Create an instance
+   late File pickedFile;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async {
-                await pickImage();
+               pickedFile = await pickImage();
               },
               child: Text('Add/Change Photo'),
             ),
@@ -58,16 +60,28 @@ class ProfileScreen extends StatelessWidget {
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async {
-                FirebaseOperation firebaseOperation =
-                    FirebaseOperation(); // Create an instance
-                await firebaseOperation.addUserData(
-                  name: _profileController.name.value,
-                  photoUrl: _profileController.photoUrl.value,
-                  password: _profileController.password.value,
-                  phoneNumber: _authController.phone.value,
-                  // Add other fields as needed
-                );
-                Get.offAll(HomeScreen());
+                try {
+                 
+                  String? photoUrl =
+                      await firebaseOperation.uploadImage(pickedFile, 'user');
+
+                  if (photoUrl != null) {
+                    await firebaseOperation.addUserData(
+                      name: _profileController.name.value,
+                      photoUrl: photoUrl,
+                      password: _profileController.password.value,
+                      phoneNumber: _authController.phone.value,
+                    );
+
+                    Get.offAll(HomeScreen());
+                  } else {
+                    // Handle the case when image upload fails or download URL is not obtained
+                    print('Image upload failed or URL not obtained.');
+                    // You can show a toast or error message to the user
+                  }
+                } catch (e) {
+                  print('Error: $e');
+                }
               },
               child: Text('Go to Home'),
             ),
@@ -77,11 +91,14 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Future<void> pickImage() async {
-    final pickedFile = await _imagePicker.pickImage(
-        source: ImageSource.gallery); // Use pickImage instead of getImage
+  Future<File> pickImage() async {
+    final pickedFile =
+        await _imagePicker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       _profileController.addPhoto(File(pickedFile.path));
+      return File(pickedFile.path);
+    } else {
+      throw Exception('Image pick failed');
     }
   }
 }

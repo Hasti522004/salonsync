@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: '/login',
+      initialRoute: AppRoutes.homeScreen,
       getPages: AppRoutes.routes,
       initialBinding: AppBindings(),
     );

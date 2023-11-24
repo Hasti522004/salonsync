@@ -16,15 +16,17 @@ class AddSalonScreen extends StatelessWidget {
   final _BottomNavbarIndexController = Get.find<BottomNavbarIndexController>();
   final ImagePicker _imagePicker = ImagePicker();
   final FirebaseOperation _firebaseFunctions = FirebaseOperation();
-  String imageUrl = "";
+  // String imageUrl = "";
+  late File pickedFile;
 
   AddSalonScreen({super.key});
-  Future<XFile?> pickImage() async {
-    try {
-      return await _imagePicker.pickImage(source: ImageSource.gallery);
-    } catch (e) {
-      print("Error picking image: $e");
-      return null;
+  Future<File?> pickImage() async {
+    final pickedFile =
+        await _imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      return File(pickedFile.path);
+    } else {
+      throw Exception('Image pick failed');
     }
   }
 
@@ -39,17 +41,7 @@ class AddSalonScreen extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () async {
-                try {
-                  XFile? image = await pickImage();
-                  if (image != null) {
-                    print("Image Path is: ${image.path}");
-                    imageUrl = (await _firebaseFunctions.uploadImage(
-                        File(image.path), "salon"))!;
-                    print("Image Found: $imageUrl");
-                  }
-                } catch (e) {
-                  print("Error picking/uploading image: $e");
-                }
+                pickedFile = (await pickImage())!;
               },
               child: Text("Pick Image"),
             ),
@@ -76,27 +68,36 @@ class AddSalonScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 try {
-                  await _firebaseFunctions.addSalon(
-                      _controller.salonNameController.text,
-                      _controller.addressController.text,
-                      int.parse(_controller.ratingController.text),
-                      int.parse(_controller.likeCountController.text),
-                      imageUrl);
-                  _controller.clearForm();
+                  String? photoUrl =
+                      await _firebaseFunctions.uploadImage(pickedFile, 'salon');
+                  if (photoUrl != null) {
+                    await _firebaseFunctions.addSalon(
+                        _controller.salonNameController.text,
+                        _controller.addressController.text,
+                        int.parse(_controller.ratingController.text),
+                        int.parse(_controller.likeCountController.text),
+                        photoUrl);
+                    _controller.clearForm();
 
+                    Get.snackbar(
+                      'Salon Added',
+                      'Salon added successfully!',
+                      backgroundColor: Colors.green,
+                      snackPosition: SnackPosition.BOTTOM,
+                      duration: Duration(seconds: 2),
+                    );
+
+                    // Redirect to home page after a delay
+                    Future.delayed(Duration(seconds: 2), () {
+                      Get.offAll(HomeScreen());
+                    });
+                  }
                   // Show success message
-                  Get.snackbar(
-                    'Salon Added',
-                    'Salon added successfully!',
-                    backgroundColor: Colors.green,
-                    snackPosition: SnackPosition.BOTTOM,
-                    duration: Duration(seconds: 2),
-                  );
-
-                  // Redirect to home page after a delay
-                  Future.delayed(Duration(seconds: 2), () {
-                    Get.to(HomeScreen());
-                  });
+                  else {
+                    // Handle the case when image upload fails or download URL is not obtained
+                    print('Image upload failed or URL not obtained.');
+                    // You can show a toast or error message to the user
+                  }
                 } catch (e) {
                   print('Error adding salon: $e');
                 }
