@@ -72,9 +72,10 @@ class ProfileScreen extends StatelessWidget {
                       password: _profileController.password.value,
                       phoneNumber: _authController.phone.value,
                     );
-                    UserManager.setUserId(firebaseOperation
+                    UserManager.setUserId(await firebaseOperation
                             .getUserIdByPhoneNumber(_authController.phone.value)
                         as String?);
+
                     Get.offAll(HomeScreen());
                   } else {
                     // Handle the case when image upload fails or download URL is not obtained

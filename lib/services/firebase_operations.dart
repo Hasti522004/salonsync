@@ -198,4 +198,13 @@ class FirebaseOperation {
       return null;
     }
   }
+
+  Future<void> deleteUserData(String userId) async {
+    try {
+      await _firestore.collection('users').doc(userId).delete();
+    } catch (e) {
+      print('Error deleting user data: $e');
+      // Handle the error (show a message or log it)
+    }
+  }
 }
