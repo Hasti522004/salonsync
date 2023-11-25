@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salonsync/controller/screen_controller/bottom_navbar_index_controller.dart';
+import 'package:salonsync/controller/screen_controller/salon_list_controller.dart';
 import 'package:salonsync/model/salon_card_model.dart';
 import 'package:salonsync/screen/home/treatment_screen.dart';
 import 'package:salonsync/services/firebase_operations.dart';
@@ -13,6 +14,7 @@ import 'package:salonsync/widgets/sidebar_widget.dart';
 class HomeScreen extends StatelessWidget {
   final _BottomNavbarIndexController = Get.put(BottomNavbarIndexController());
   final FirebaseOperation _firebaseFunctions = FirebaseOperation();
+  final _SalonListController = Get.put(SalonListController());
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,7 @@ class HomeScreen extends StatelessWidget {
                 likeCount: salon['likeCount'] ?? 0,
                 onTap: () {
                   // Navigate to TreatmentScreen and pass salon details
+
                   Get.to(
                     () => TreatmentScreen(),
                     arguments: {'salonName': salon['salonName']},
@@ -46,6 +49,9 @@ class HomeScreen extends StatelessWidget {
               cardWidgets.add(SalonbuildCardWidget(context, card, () {
                 Get.to(() => TreatmentScreen(),
                     arguments: {'salonName': salon['salonName']});
+
+                _SalonListController.updateSelectedSalonId(salon['id']);
+                print("Salon Id: ${_SalonListController.selectedSalonId}");
                 print('Salon card tapped!');
               }));
             }

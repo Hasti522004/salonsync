@@ -32,9 +32,8 @@ class AppRoutes {
       page: () => TreatmentScreen(),
     ),
     GetPage(
-      name: appointmentBooking,
-      page: () => AppoinmentBooking(),
-    ),
+        name: appointmentBooking,
+        page: () => AppointmentBookingScreen()),
     GetPage(
       name: paymentScreen,
       page: () => PaymentScreen(),
@@ -48,7 +47,7 @@ class AppRoutes {
       page: () => AddSalonScreen(),
       binding: AppBindings(),
     ),
-     GetPage(
+    GetPage(
       name: addTreatmentPage,
       page: () => AddTreatmentScreen(),
       binding: AppBindings(),

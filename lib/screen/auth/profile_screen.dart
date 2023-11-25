@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:salonsync/controller/auth/login_conroller.dart';
 import 'package:salonsync/controller/auth/profile_controller.dart';
+import 'package:salonsync/controller/userid_record.dart';
 import 'package:salonsync/screen/home/home_screen.dart';
 import 'package:salonsync/services/firebase_operations.dart';
 
@@ -16,7 +17,7 @@ class ProfileScreen extends StatelessWidget {
   final ImagePicker _imagePicker = ImagePicker();
   final FirebaseOperation firebaseOperation =
       FirebaseOperation(); // Create an instance
-   late File pickedFile;
+  late File pickedFile;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +43,7 @@ class ProfileScreen extends StatelessWidget {
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async {
-               pickedFile = await pickImage();
+                pickedFile = await pickImage();
               },
               child: Text('Add/Change Photo'),
             ),
@@ -61,7 +62,6 @@ class ProfileScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 try {
-                 
                   String? photoUrl =
                       await firebaseOperation.uploadImage(pickedFile, 'user');
 
@@ -72,7 +72,9 @@ class ProfileScreen extends StatelessWidget {
                       password: _profileController.password.value,
                       phoneNumber: _authController.phone.value,
                     );
-
+                    UserManager.setUserId(firebaseOperation
+                            .getUserIdByPhoneNumber(_authController.phone.value)
+                        as String?);
                     Get.offAll(HomeScreen());
                   } else {
                     // Handle the case when image upload fails or download URL is not obtained

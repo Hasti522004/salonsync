@@ -128,4 +128,9 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+
+  // Future<bool> checkFirstLogin() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   return prefs.getBool('isFirstLogin') ?? true;
+  // }
 }

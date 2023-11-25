@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salonsync/binding/app_binding.dart';
 import 'package:salonsync/route/route.dart';
+import 'package:salonsync/screen/Splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,9 +17,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: AppRoutes.homeScreen,
-      getPages: AppRoutes.routes,
-      initialBinding: AppBindings(),
-    );
+        // initialRoute: '/login',
+        getPages: AppRoutes.routes,
+        initialBinding: AppBindings(),
+        home: SplashScreen());
   }
 }

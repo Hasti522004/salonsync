@@ -15,7 +15,7 @@ class TextFieldWidget extends StatelessWidget {
     required this.controller,
     this.onChanged,
     this.keyboardType,
-    this.validator,
+    this.validator, required bool enabled,
   }) : super(key: key);
 
   @override
