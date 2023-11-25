@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salonsync/controller/screen_controller/payment_controller.dart';
 
-
 class PaymentScreen extends StatelessWidget {
   final PaymentController _paymentController = Get.put(PaymentController());
 

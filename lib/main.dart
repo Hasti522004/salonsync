@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salonsync/binding/app_binding.dart';
 import 'package:salonsync/route/route.dart';
-import 'package:salonsync/screen/Splash_screen.dart';
+import 'package:salonsync/screen/payment/payment_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +20,6 @@ class MyApp extends StatelessWidget {
         // initialRoute: '/login',
         getPages: AppRoutes.routes,
         initialBinding: AppBindings(),
-        home: SplashScreen());
+        home: PaymentScreen());
   }
 }
