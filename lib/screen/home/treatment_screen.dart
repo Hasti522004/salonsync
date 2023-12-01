@@ -27,11 +27,14 @@ class TreatmentScreen extends StatelessWidget {
           );
         },
       ),
-      bottomNavigationBar: CommonBottomNavigationBar(
-        currentIndex: _BottomNavbarIndexController.currentIndex.value,
-        onTap: (index) {
-          _BottomNavbarIndexController.currentIndex.value = index;
-        },
+      bottomNavigationBar: Container(
+        color: Colors.black, // Set the background color to black
+        child: CommonBottomNavigationBar(
+          currentIndex: _BottomNavbarIndexController.currentIndex.value,
+          onTap: (index) {
+            _BottomNavbarIndexController.currentIndex.value = index;
+          },
+        ),
       ),
     );
   }

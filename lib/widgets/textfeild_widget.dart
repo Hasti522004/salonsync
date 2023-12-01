@@ -25,13 +25,16 @@ class TextFieldWidget extends StatelessWidget {
       children: [
         Text(label),
         TextFormField(
+          
           decoration: InputDecoration(
             hintText: hint,
+            
           ),
           controller: controller,
           onChanged: onChanged,
           keyboardType: keyboardType,
           validator: validator,
+          
         ),
       ],
     );

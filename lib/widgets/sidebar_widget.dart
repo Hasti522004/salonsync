@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:salonsync/controller/userid_record.dart';
 import 'package:salonsync/route/route.dart';
 import 'package:salonsync/services/firebase_operations.dart';
+import 'package:salonsync/utils/colors.dart';
 
 class CommonDrawer extends StatelessWidget {
   final FirebaseOperation _firebaseFunctions = FirebaseOperation();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,7 +31,7 @@ class CommonDrawer extends StatelessWidget {
                 Get.toNamed(AppRoutes.mainprofilePage);
               }),
               buildDrawerItem('Theme', Icons.palette, () {
-                // Handle theme change
+                _showThemeDialog();
               }),
               buildDrawerItem('Language', Icons.language, () {
                 // Handle language change
@@ -67,6 +70,50 @@ class CommonDrawer extends StatelessWidget {
     );
   }
 
+  void _showThemeDialog() {
+    Get.defaultDialog(
+      title: 'Theme Selection',
+      content: Column(
+        children: [
+          Text('Select a theme:'),
+          SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              _changeTheme(AppColors.themeGreen);
+              Get.back();
+            },
+            style: ElevatedButton.styleFrom(
+              primary: AppColors.themeGreen,
+            ),
+            child: Text('Green Theme'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              _changeTheme(AppColors.black);
+              Get.back();
+            },
+            style: ElevatedButton.styleFrom(
+              primary: AppColors.black,
+            ),
+            child: Text('Default Theme'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _changeTheme(Color themeColor) {
+    // Save the selected theme color to GetStorage for persistence
+    GetStorage().write('themeColor', themeColor.value);
+
+    // Update the theme dynamically
+    Get.changeTheme(
+      ThemeData(
+        primaryColor: themeColor,
+      ),
+    );
+  }
+
   void _showLogoutConfirmationDialog() {
     Get.defaultDialog(
       title: 'Logout Confirmation',
@@ -74,15 +121,14 @@ class CommonDrawer extends StatelessWidget {
       actions: [
         ElevatedButton(
           onPressed: () {
-            // Handle logout
             _logout();
-            Get.back(); // Close the confirmation dialog
+            Get.back();
           },
           child: Text('Logout'),
         ),
         TextButton(
           onPressed: () {
-            Get.back(); // Close the confirmation dialog
+            Get.back();
           },
           child: Text('Cancel'),
         ),
@@ -92,20 +138,10 @@ class CommonDrawer extends StatelessWidget {
 
   void _logout() async {
     try {
-      // Delete user data from the database
-
       await _firebaseFunctions.deleteUserData("${UserManager.userId}");
-
-      // Add logic to perform logout actions, such as clearing user credentials or tokens
-      // For example, if you're using GetStorage for authentication, you might do:
-      // GetStorage().remove('token');
-
-      // Redirect to the login screen
-      Get.offAllNamed(
-          '/login'); // Replace '/login' with the actual route for your login screen
+      Get.offAllNamed('/login');
     } catch (e) {
       print('Error during logout: $e');
-      // Handle the error (show a message or log it)
     }
   }
 }

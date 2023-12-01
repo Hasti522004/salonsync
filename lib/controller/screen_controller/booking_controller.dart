@@ -7,10 +7,6 @@ class AppointmentBookingController extends GetxController {
 
   final List<String> timeSlots = generateTimeSlots();
 
-
-
-  
-
   void updateSelectedDate(DateTime date) {
     selectedDate.value = date;
   }
