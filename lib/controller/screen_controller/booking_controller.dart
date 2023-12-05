@@ -22,11 +22,9 @@ class AppointmentBookingController extends GetxController {
 
   static List<String> generateTimeSlots() {
     List<String> timeSlots = [];
-    DateTime currentTime = DateTime.now();
-
-    int startHour = currentTime.hour;
-    int startMinute = currentTime.minute;
-    int endHour = 20;
+    int startHour = 8; // Start from 8 AM
+    int startMinute = 0;
+    int endHour = 20; // End at 8 PM
 
     while (startHour < endHour) {
       String formattedTime =
@@ -43,41 +41,30 @@ class AppointmentBookingController extends GetxController {
     return timeSlots;
   }
 
-  // New methods for month navigation
-  // void nextMonth() {
-  //   selectedDate.value = DateTime(selectedDate.value.year,
-  //       selectedDate.value.month + 1, selectedDate.value.day);
-  // }
-
-  // void previousMonth() {
-  //   selectedDate.value = DateTime(selectedDate.value.year,
-  //       selectedDate.value.month - 1, selectedDate.value.day);
-  // }
-
+  // Additional methods from HomeController
   // Additional methods from HomeController
   chooseDate() async {
+    DateTime currentDate = DateTime.now();
+    DateTime firstAllowedDate = currentDate;
+    DateTime lastAllowedDate =
+        currentDate.add(Duration(days: 60)); // Two months later
+
     DateTime? pickedDate = await showDatePicker(
       context: Get.context!,
       initialDate: selectedDate.value,
-      firstDate: DateTime(DateTime.now().year),
-      lastDate: DateTime(DateTime.now().year + 1),
+      firstDate: firstAllowedDate,
+      lastDate: lastAllowedDate,
       helpText: 'Select Date',
       cancelText: 'Close',
       confirmText: 'Confirm',
-      errorFormatText: 'Enter valid date',
-      errorInvalidText: 'Enter valid date range',
+      errorFormatText: 'Enter a valid date',
+      errorInvalidText: 'Enter a valid date range',
       fieldLabelText: 'Select Date',
       fieldHintText: 'Month/Date/Year',
-      selectableDayPredicate: disableDate,
     );
 
     if (pickedDate != null && pickedDate != selectedDate.value) {
       selectedDate.value = pickedDate;
     }
-  }
-
-  bool disableDate(DateTime day) {
-    // Disable all past dates
-    return day.isAfter(DateTime.now().subtract(Duration(days: 1)));
   }
 }

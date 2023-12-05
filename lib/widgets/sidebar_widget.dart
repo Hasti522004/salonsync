@@ -1,43 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:salonsync/controller/userid_record.dart';
 import 'package:salonsync/route/route.dart';
 import 'package:salonsync/services/firebase_operations.dart';
-import 'package:salonsync/utils/colors.dart';
 
 class CommonDrawer extends StatelessWidget {
   final FirebaseOperation _firebaseFunctions = FirebaseOperation();
 
   @override
   Widget build(BuildContext context) {
+    double sidebarWidth =
+        MediaQuery.of(context).size.width * 0.7; // 70% of the screen width
+
     return SafeArea(
       child: Drawer(
         child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(20),
-                color: Color.fromARGB(255, 108, 104, 102),
-                child: Text(
-                  'Drawer Header',
-                  style: TextStyle(
-                    color: const Color.fromARGB(255, 0, 0, 0),
-                    fontSize: 24,
+          child: Container(
+            width: sidebarWidth, // Set the width of the sidebar
+            child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.all(20),
+                  // color: Color.fromARGB(255, 108, 104, 102),
+                  child: Column(
+                    children: [
+                      Text(
+                        'SalonSync',
+                        style: TextStyle(
+                          color: const Color.fromARGB(255, 0, 0, 0),
+                          fontSize: 24,
+                        ),
+                      ),
+                      Divider(
+                        color: Colors.black,
+                      ), // Add a divider after "SalonSync"
+                    ],
                   ),
                 ),
-              ),
-              buildDrawerItem('Profile', Icons.person, () {
-                Get.toNamed(AppRoutes.mainprofilePage);
-              }),
-              buildDrawerItem('Theme', Icons.palette, () {
-                _showThemeDialog();
-              }),
-              buildDrawerItem('Language', Icons.language, () {
-                // Handle language change
-              }),
-              buildLogoutItem(),
-            ],
+                buildDrawerItem('Profile', Icons.person, () {
+                  Get.toNamed(AppRoutes.mainprofilePage);
+                }),
+                buildDrawerItem('Add Salon', Icons.add, () {
+                  Get.toNamed(AppRoutes.addSalonPage);
+                  // Handle add salon click
+                }),
+                buildDrawerItem('Add Treatment', Icons.add, () {
+                  Get.toNamed(AppRoutes.addTreatmentPage);
+                  // Handle add treatment click
+                }),
+                // Add the "Settings" item
+                buildDrawerItem('Settings', Icons.settings, () {
+                  // Handle settings click
+                }),
+                buildLogoutItem(),
+              ],
+            ),
           ),
         ),
       ),
@@ -67,50 +84,6 @@ class CommonDrawer extends StatelessWidget {
         ],
       ),
       onTap: () => _showLogoutConfirmationDialog(),
-    );
-  }
-
-  void _showThemeDialog() {
-    Get.defaultDialog(
-      title: 'Theme Selection',
-      content: Column(
-        children: [
-          Text('Select a theme:'),
-          SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () {
-              _changeTheme(AppColors.themeGreen);
-              Get.back();
-            },
-            style: ElevatedButton.styleFrom(
-              primary: AppColors.themeGreen,
-            ),
-            child: Text('Green Theme'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              _changeTheme(AppColors.black);
-              Get.back();
-            },
-            style: ElevatedButton.styleFrom(
-              primary: AppColors.black,
-            ),
-            child: Text('Default Theme'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _changeTheme(Color themeColor) {
-    // Save the selected theme color to GetStorage for persistence
-    GetStorage().write('themeColor', themeColor.value);
-
-    // Update the theme dynamically
-    Get.changeTheme(
-      ThemeData(
-        primaryColor: themeColor,
-      ),
     );
   }
 

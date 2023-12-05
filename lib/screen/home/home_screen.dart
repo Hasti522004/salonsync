@@ -61,7 +61,7 @@ class HomeScreen extends StatelessWidget {
                   width: double.infinity,
                   color: themeController.isThemeGreen.value
                       ? AppColors.white
-                      : Color.fromARGB(255, 60, 58, 58),
+                      : Color.fromARGB(255, 56, 55, 55),
                   child: Column(
                     children: [
                       Expanded(

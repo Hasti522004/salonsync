@@ -13,7 +13,10 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     return GetBuilder<ThemeController>(
       builder: (themeController) {
         return AppBar(
-          title: Text(title),
+          title: Text(
+            title,
+            style: TextStyle(color: Colors.white),
+          ),
           actions: [
             IconButton(
               icon: Icon(Icons.menu),

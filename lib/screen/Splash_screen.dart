@@ -28,12 +28,11 @@ class SplashScreen extends StatelessWidget {
                   UserManager.setUserId(await firebaseOperation
                       .getUserIdByPhoneNumber("${user.phoneNumber}"));
 
-                
                   // User is already authenticated, navigate to HomeScreen
-                  Get.off(HomeScreen());
+                  Get.offAll(HomeScreen());
                 } else {
                   // User is not authenticated, navigate to LoginScreen
-                  Get.off(LoginScreen());
+                  Get.offAll(LoginScreen());
                 }
               },
               child: Text("Login"),

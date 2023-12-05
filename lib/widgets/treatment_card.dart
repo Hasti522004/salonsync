@@ -8,13 +8,18 @@ Widget TreatmentbuildCardWidget({
   return GestureDetector(
     onTap: onTap,
     child: Card(
+      color: Color.fromARGB(255, 231, 226, 226),
       child: Column(
         children: [
-          Image.network(
-            tcard.image,
-            height: 150.0,
-            width: double.infinity,
-            fit: BoxFit.cover,
+          Container(
+            // Set the background color to gray below the image
+            color: Color.fromARGB(18, 66, 31, 136),
+            child: Image.network(
+              tcard.image,
+              height: 150.0,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -25,7 +30,7 @@ Widget TreatmentbuildCardWidget({
                   tcard.treatmentName,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text('\$$tcard.price'),
+                Text('price:${tcard.price}'),
                 Text('Duration: ${tcard.duration}'),
               ],
             ),
@@ -35,4 +40,3 @@ Widget TreatmentbuildCardWidget({
     ),
   );
 }
-  

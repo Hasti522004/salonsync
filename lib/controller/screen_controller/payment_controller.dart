@@ -1,10 +1,22 @@
+// payment_controller.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:salonsync/controller/screen_controller/booking_controller.dart';
+import 'package:salonsync/controller/screen_controller/salon_list_controller.dart';
+import 'package:salonsync/controller/screen_controller/treatment_controller.dart';
+import 'package:salonsync/controller/userid_record.dart';
 import 'package:salonsync/route/route.dart';
+import 'package:salonsync/services/firebase_operations.dart';
 
 class PaymentController extends GetxController {
+  final AppointmentBookingController _controller =
+      Get.put(AppointmentBookingController());
+  final _treatmentcontroller = Get.find<TreatmentController>();
+  final _saloncontroller = Get.find<SalonListController>();
+
+  final FirebaseOperation _firebaseOperation = FirebaseOperation();
   late Razorpay _razorpay;
   var amountController = TextEditingController();
 
@@ -29,29 +41,27 @@ class PaymentController extends GetxController {
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    // Do something when payment succeeds
+  Future<void> _handlePaymentSuccess(PaymentSuccessResponse response) async {
     print("Payment Done");
 
-    // Show success notification
     _showNotification("Payment Successful", "Thank you for your payment!");
+    await _firebaseOperation.addAppointmentBooking(
+      userId: "${UserManager.userId}",
+      selectedDate: "${_controller.selectedDate.value}",
+      selectedTimeSlot: "${_controller.selectedTimeSlot.value}",
+      selectedTreatmentId: "${_treatmentcontroller.selectedTreatmentId}",
+      selectedSalonId: "${_saloncontroller.selectedSalonId}",
+    );
     Get.toNamed(AppRoutes.homeScreen);
-    // Add logic to send notifications to user and salon here
-    // You can use Firebase Cloud Messaging (FCM) for this purpose.
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    // Do something when payment fails
     print("Payment Fail");
-
-    // Show failure notification
     _showNotification(
         "Payment Failed", "Oops! Something went wrong with your payment.");
   }
 
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    // Do something when an external wallet is selected
-  }
+  void _handleExternalWallet(ExternalWalletResponse response) {}
 
   void makePayment() {
     var options = {
