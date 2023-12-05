@@ -113,6 +113,22 @@ class FirebaseOperation {
     return salonList;
   }
 
+  Future<List<Map<String, dynamic>>> featchslots() async {
+    List<Map<String, dynamic>> slotlist = [];
+    try {
+      QuerySnapshot snapshot = await _firestore.collection('appointment').get();
+
+      snapshot.docs.forEach((doc) {
+        Map<String, dynamic> slotData = doc.data() as Map<String, dynamic>;
+        slotData['id'] = doc.id; // Add the document ID to the salon data
+        slotlist.add(slotData);
+      });
+    } catch (e) {
+      print("Error fetching salons: $e");
+    }
+    return slotlist;
+  }
+
   Future<void> addTreatment(String treatmentName, double price, String duration,
       String imageUrl) async {
     try {

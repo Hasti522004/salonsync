@@ -45,7 +45,6 @@ class TreatmentController extends GetxController {
             (i + 1 < treatments.length) ? treatments[i + 1]['duration'] : '';
         String img = treatments[i]['imageUrl'];
         String treatmentId2 = treatments[i + 1]['id'];
-// ... (similar checks for other variables)
 
         if (img.isNotEmpty) {
           cardList.add(

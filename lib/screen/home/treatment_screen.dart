@@ -19,7 +19,7 @@ class TreatmentScreen extends StatelessWidget {
       appBar: CommonAppBar(
         title: '$salonName',
       ),
-      drawer: CommonDrawer(),
+      endDrawer: CommonDrawer(),
       body: GetBuilder<TreatmentController>(
         builder: (controller) {
           return ListView(
