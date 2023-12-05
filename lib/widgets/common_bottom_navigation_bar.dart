@@ -23,7 +23,7 @@ class CommonBottomNavigationBar extends StatelessWidget {
       decoration: BoxDecoration(
         color: themeController.isThemeGreen.value
             ? AppColors.themeGreen
-            : AppColors.black,
+            : const Color.fromARGB(255, 20, 20, 20),
       ),
       // color: Colors.black,
       child: BottomNavigationBar(
@@ -38,11 +38,12 @@ class CommonBottomNavigationBar extends StatelessWidget {
               Get.toNamed(AppRoutes.mainprofilePage);
               break;
             case 2:
-              Get.toNamed(AppRoutes.addTreatmentPage);
+              Get.toNamed(AppRoutes.addSalonPage);
               break;
             case 3:
               Get.toNamed(AppRoutes.treatmentScreen);
               break;
+
             default:
               Get.toNamed(AppRoutes.homeScreen);
           }
@@ -67,10 +68,10 @@ class CommonBottomNavigationBar extends StatelessWidget {
         ],
         selectedItemColor: themeController.isThemeGreen.value
             ? AppColors.themeBrown
-            : AppColors.darkGoldenrod,
+            : const Color.fromARGB(255, 24, 23, 22),
         unselectedItemColor: themeController.isThemeGreen.value
             ? AppColors.themeBrown.withOpacity(0.5)
-            : AppColors.darkGoldenrod.withOpacity(0.5),
+            : const Color.fromARGB(255, 16, 15, 15).withOpacity(0.5),
       ),
     );
   }

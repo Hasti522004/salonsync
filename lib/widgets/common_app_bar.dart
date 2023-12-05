@@ -14,19 +14,18 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       builder: (themeController) {
         return AppBar(
           title: Text(title),
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: Icon(Icons.menu),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              );
-            },
-          ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openEndDrawer();
+              },
+            ),
+            // Add additional widgets for the trailing content as needed
+          ],
           backgroundColor: themeController.isThemeGreen.value
               ? AppColors.themeGreen
-              : AppColors.darkGoldenrod,
+              : Color.fromARGB(255, 23, 23, 23),
         );
       },
     );

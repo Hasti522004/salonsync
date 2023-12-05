@@ -11,14 +11,21 @@ Widget SalonbuildCardWidget(
   return GestureDetector(
     onTap: onTap, // Handle the tap event
     child: Container(
+      decoration: BoxDecoration(
+        border:
+            Border.all(color: Colors.white, width: 1.0), // Add silver border
+        borderRadius: BorderRadius.circular(
+            8.0), // Optional: Add border radius for rounded corners
+      ),
       height: MediaQuery.of(context).size.height * 0.25,
+      width: 100,
       child: GetBuilder<ThemeController>(
         // Use GetBuilder to listen to theme changes
         builder: (themeController) {
           return Card(
             color: themeController.isThemeGreen.value
                 ? AppColors.themeGreen
-                : AppColors.orangeYellow, // Use the theme color
+                : Color.fromARGB(255, 7, 7, 7), // Use the theme color
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -51,11 +58,13 @@ Widget SalonbuildCardWidget(
                           fontSize: 20,
                           fontFamily: 'RobotoMono',
                           fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
                       ),
                       Text(
                         salonCard.address,
                         style: TextStyle(
+                          color: Colors.white,
                           fontSize: 10,
                         ),
                       ),

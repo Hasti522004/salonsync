@@ -9,7 +9,6 @@ import 'package:salonsync/screen/home/treatment_screen.dart';
 import 'package:salonsync/services/firebase_operations.dart';
 import 'package:salonsync/utils/colors.dart';
 import 'package:salonsync/widgets/common_app_bar.dart';
-import 'package:salonsync/widgets/common_bottom_navigation_bar.dart';
 import 'package:salonsync/widgets/salon_card.dart';
 import 'package:salonsync/widgets/sidebar_widget.dart';
 
@@ -24,7 +23,7 @@ class HomeScreen extends StatelessWidget {
       builder: (themeController) {
         return Scaffold(
           appBar: CommonAppBar(title: "Salon-List"),
-          drawer: CommonDrawer(),
+          endDrawer: CommonDrawer(),
           body: FutureBuilder<List<Map<String, dynamic>>>(
             future: _firebaseFunctions.fetchSalons(),
             builder: (context, snapshot) {
@@ -62,7 +61,7 @@ class HomeScreen extends StatelessWidget {
                   width: double.infinity,
                   color: themeController.isThemeGreen.value
                       ? AppColors.white
-                      : AppColors.black,
+                      : Color.fromARGB(255, 60, 58, 58),
                   child: Column(
                     children: [
                       Expanded(
@@ -76,15 +75,15 @@ class HomeScreen extends StatelessWidget {
               }
             },
           ),
-          bottomNavigationBar: Container(
-            color: Colors.black, // Set the background color to black
-            child: CommonBottomNavigationBar(
-              currentIndex: _BottomNavbarIndexController.currentIndex.value,
-              onTap: (index) {
-                _BottomNavbarIndexController.currentIndex.value = index;
-              },
-            ),
-          ),
+          // bottomNavigationBar: Container(
+          //   color: Colors.black, // Set the background color to black
+          //   child: CommonBottomNavigationBar(
+          //     currentIndex: _BottomNavbarIndexController.currentIndex.value,
+          //     onTap: (index) {
+          //       _BottomNavbarIndexController.currentIndex.value = index;
+          //     },
+          //   ),
+          // ),
         );
       },
     );
