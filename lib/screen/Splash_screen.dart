@@ -25,8 +25,10 @@ class SplashScreen extends StatelessWidget {
                 // Navigate to the appropriate screen based on user authentication
                 if (user != null) {
                   print("User is logged in: ${user.phoneNumber}");
-                  UserManager.setUserId(await firebaseOperation
-                      .getUserIdByPhoneNumber("${user.phoneNumber}"));
+                  UserManager.setUserId(
+                      await firebaseOperation
+                          .getUserIdByPhoneNumber("${user.phoneNumber}"),
+                      user.phoneNumber);
 
                   // User is already authenticated, navigate to HomeScreen
                   Get.offAll(HomeScreen());

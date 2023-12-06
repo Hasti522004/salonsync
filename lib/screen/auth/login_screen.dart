@@ -4,13 +4,48 @@ import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:lottie/lottie.dart';
 import 'package:salonsync/controller/auth/login_conroller.dart';
+import 'package:salonsync/controller/userid_record.dart';
 import 'package:salonsync/screen/auth/verification_screen.dart';
 import 'package:salonsync/screen/home/home_screen.dart';
+import 'package:salonsync/services/firebase_operations.dart';
 
 class LoginScreen extends StatelessWidget {
   final LoginController _loginController = Get.put(LoginController());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _phoneNumberController = TextEditingController();
+  final FirebaseOperation firebaseOperation = FirebaseOperation();
+
+  Future<void> setUserIdAndNavigate(String phoneNumber) async {
+    UserManager.setUserId(
+        await firebaseOperation.getUserIdByPhoneNumber(phoneNumber),
+        phoneNumber);
+    print('userIDDDDD:${UserManager.userId}');
+    if (_formKey.currentState!.validate()) {
+      print("Phone number for authentication: $phoneNumber");
+
+      // Check if the user is already authenticated
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        // User is already signed in, navigate to HomeScreen
+        print(currentUser);
+        Get.to(HomeScreen());
+      } else {
+        // User not found, proceed with sending the verification code
+
+        await FirebaseAuth.instance.verifyPhoneNumber(
+          phoneNumber: phoneNumber,
+          verificationCompleted: (PhoneAuthCredential credential) {},
+          verificationFailed: (FirebaseAuthException e) {
+            print("Verification failed: ${e.message}");
+          },
+          codeSent: (String verificationId, int? resendToken) {
+            Get.to(VerificationScreen(verificationId));
+          },
+          codeAutoRetrievalTimeout: (String verificationId) {},
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,35 +108,8 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          String fullPhoneNumber = _loginController.phone.value;
-                          print(
-                              "Phone number for authentication: $fullPhoneNumber");
-
-                          // Check if the user is already authenticated
-                          User? currentUser = FirebaseAuth.instance.currentUser;
-                          if (currentUser != null) {
-                            // User is already signed in, navigate to HomeScreen
-                            print(currentUser);
-                            Get.to(HomeScreen());
-                          } else {
-                            // User not found, proceed with sending the verification code
-                            await FirebaseAuth.instance.verifyPhoneNumber(
-                              phoneNumber: fullPhoneNumber,
-                              verificationCompleted:
-                                  (PhoneAuthCredential credential) {},
-                              verificationFailed: (FirebaseAuthException e) {
-                                print("Verification failed: ${e.message}");
-                              },
-                              codeSent:
-                                  (String verificationId, int? resendToken) {
-                                Get.to(VerificationScreen(verificationId));
-                              },
-                              codeAutoRetrievalTimeout:
-                                  (String verificationId) {},
-                            );
-                          }
-                        }
+                        String fullPhoneNumber = _loginController.phone.value;
+                        await setUserIdAndNavigate(fullPhoneNumber);
                       },
                       child: Text(
                         "Verify Phone Number",

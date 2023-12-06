@@ -10,7 +10,6 @@ import 'package:salonsync/widgets/sidebar_widget.dart';
 import 'package:salonsync/widgets/textfeild_widget.dart';
 
 class MainProfilePage extends StatelessWidget {
-  
   final _BottomNavbarIndexController = Get.find<BottomNavbarIndexController>();
   final EditProfileController editProfileController =
       Get.put(EditProfileController());

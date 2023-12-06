@@ -22,7 +22,6 @@ class CommonDrawer extends StatelessWidget {
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.all(20),
-                  // color: Color.fromARGB(255, 108, 104, 102),
                   child: Column(
                     children: [
                       Text(
@@ -34,7 +33,7 @@ class CommonDrawer extends StatelessWidget {
                       ),
                       Divider(
                         color: Colors.black,
-                      ), // Add a divider after "SalonSync"
+                      ),
                     ],
                   ),
                 ),
@@ -42,12 +41,10 @@ class CommonDrawer extends StatelessWidget {
                   Get.toNamed(AppRoutes.mainprofilePage);
                 }),
                 FutureBuilder<bool>(
-                  future:
-                      _firebaseFunctions.fetchIsAdmin(UserManager.userId ?? ''),
+                  future: fetchIsAdmin(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       if (snapshot.data == true) {
-                        // Conditionally add "Add Salon" item based on isAdmin
                         buildDrawerItem('Add Salon', Icons.add, () {
                           Get.toNamed(AppRoutes.addSalonPage);
                         });
@@ -56,11 +53,12 @@ class CommonDrawer extends StatelessWidget {
                     return Container();
                   },
                 ),
+                buildDrawerItem('Add Salon', Icons.add, () {
+                  Get.toNamed(AppRoutes.addSalonPage);
+                }),
                 buildDrawerItem('Add Treatment', Icons.add, () {
                   Get.toNamed(AppRoutes.addTreatmentPage);
-                  // Handle add treatment click
                 }),
-                // Add the "Settings" item
                 buildDrawerItem('Settings', Icons.settings, () {
                   // Handle settings click
                 }),
@@ -99,6 +97,13 @@ class CommonDrawer extends StatelessWidget {
     );
   }
 
+  Future<bool> fetchIsAdmin() async {
+    String userId = UserManager.userId ?? '';
+    print('User ID passed to fetchIsAdmin: $userId');
+
+    return _firebaseFunctions.fetchIsAdmin(userId);
+  }
+
   void _showLogoutConfirmationDialog() {
     Get.defaultDialog(
       title: 'Logout Confirmation',
@@ -107,7 +112,6 @@ class CommonDrawer extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             _logout();
-
             Get.back();
           },
           child: Text('Logout'),
@@ -124,8 +128,10 @@ class CommonDrawer extends StatelessWidget {
 
   void _logout() async {
     try {
+      String userPhoneNumber = UserManager.userPhoneNumber ?? '';
       await _firebaseFunctions.deleteUserData("${UserManager.userId}");
       await FirebaseAuth.instance.signOut();
+      print('Logout successful for user with phone number: $userPhoneNumber');
       Get.offAllNamed('/login');
     } catch (e) {
       print('Error during logout: $e');

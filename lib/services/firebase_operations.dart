@@ -9,17 +9,18 @@ class FirebaseOperation {
   Future<void> addUserData({
     required String name,
     required String photoUrl,
-    required String password,
+    required String address,
     required String phoneNumber,
   }) async {
     try {
       await _firestore.collection('users').add({
         'name': name,
         'photoUrl': photoUrl,
-        'password': password,
+       
         'phoneNumber': phoneNumber,
         'isAdmin': false, // Add the 'isAdmin' field with a default value
-        'address1': null,
+        'isSalon': false,
+        'address1': address,
         'address2': null,
       });
       print('User data added successfully.');
@@ -226,11 +227,20 @@ class FirebaseOperation {
 
   Future<bool> fetchIsAdmin(String userId) async {
     try {
-      DocumentSnapshot snapshot = await _firestore.collection('users').doc(userId).get();
-      Map<String, dynamic>? userData = snapshot.data() as Map<String, dynamic>?;
+      print("userId :${userId}");
+      DocumentSnapshot snapshot =
+          await _firestore.collection('users').doc(userId).get();
 
-      if (userData != null && userData.containsKey('isAdmin')) {
-        return userData['isAdmin'] as bool;
+      // Check if the snapshot exists and contains data
+      if (snapshot.exists && snapshot.data() != null) {
+        Map<String, dynamic>? userData =
+            snapshot.data() as Map<String, dynamic>?;
+
+        // Check if userData is not null
+        if (userData != null && userData['isAdmin'] == true) {
+          print("UserData : ${userData['isAdmin']}");
+          return userData['isAdmin'] as bool;
+        }
       }
 
       return false; // Default to false if 'isAdmin' is not present or is not a boolean.
