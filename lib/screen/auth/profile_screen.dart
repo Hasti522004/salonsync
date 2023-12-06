@@ -21,74 +21,101 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('Profile'),
+        title: Text(
+          'Profile',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.black,
+        bottom: PreferredSize(
+          child: Divider(
+            // Add this line
+            color: Colors.white,
+            thickness: 1.0,
+          ),
+          preferredSize: Size.fromHeight(1.0),
+        ),
       ),
-      body: Container(
-        margin: EdgeInsets.all(16),
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Obx(() => CircleAvatar(
-                  radius: 50,
-                  backgroundImage: _profileController.photoUrl.isNotEmpty
-                      ? FileImage(File(_profileController.photoUrl.value))
-                      : null,
-                  child: _profileController.photoUrl.isEmpty
-                      ? Icon(Icons.person, size: 50, color: Colors.white)
-                      : null,
-                )),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () async {
-                pickedFile = await pickImage();
-              },
-              child: Text('Add/Change Photo'),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              onChanged: (value) => _profileController.addName(value),
-              decoration: InputDecoration(labelText: 'Name'),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              obscureText: true, // Hide the password
-              onChanged: (value) => _profileController.addPassword(value),
-              decoration: InputDecoration(labelText: 'Password'),
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () async {
-                try {
-                  String? photoUrl =
-                      await firebaseOperation.uploadImage(pickedFile, 'user');
+      body: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.all(16),
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Obx(() => CircleAvatar(
+                    radius: 80,
+                    backgroundImage: _profileController.photoUrl.isNotEmpty
+                        ? FileImage(File(_profileController.photoUrl.value))
+                        : null,
+                    child: _profileController.photoUrl.isEmpty
+                        ? Icon(Icons.person, size: 50, color: Colors.white)
+                        : null,
+                  )),
+              SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () async {
+                  pickedFile = await pickImage();
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 78, 150,
+                      150), // Set your desired background color here
+                ),
+                child: Text(
+                  'Add/Change Photo',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              SizedBox(height: 16),
+              TextField(
+                onChanged: (value) => _profileController.addName(value),
+                decoration: InputDecoration(labelText: 'Name'),
+              ),
+              SizedBox(height: 16),
+              TextField(
+                obscureText: true, // Hide the password
+                onChanged: (value) => _profileController.addPassword(value),
+                decoration: InputDecoration(labelText: 'Password'),
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () async {
+                  try {
+                    String? photoUrl =
+                        await firebaseOperation.uploadImage(pickedFile, 'user');
 
-                  if (photoUrl != null) {
-                    await firebaseOperation.addUserData(
-                      name: _profileController.name.value,
-                      photoUrl: photoUrl,
-                      password: _profileController.password.value,
-                      phoneNumber: _authController.phone.value,
-                    );
-                    UserManager.setUserId(await firebaseOperation
-                            .getUserIdByPhoneNumber(_authController.phone.value)
-                        as String?);
+                    if (photoUrl != null) {
+                      await firebaseOperation.addUserData(
+                        name: _profileController.name.value,
+                        photoUrl: photoUrl,
+                        password: _profileController.password.value,
+                        phoneNumber: _authController.phone.value,
+                      );
+                      UserManager.setUserId(
+                          await firebaseOperation.getUserIdByPhoneNumber(
+                              _authController.phone.value) as String?);
 
-                    Get.offAll(HomeScreen());
-                  } else {
-                    // Handle the case when image upload fails or download URL is not obtained
-                    print('Image upload failed or URL not obtained.');
-                    // You can show a toast or error message to the user
+                      Get.offAll(HomeScreen());
+                    } else {
+                      // Handle the case when image upload fails or download URL is not obtained
+                      print('Image upload failed or URL not obtained.');
+                      // You can show a toast or error message to the user
+                    }
+                  } catch (e) {
+                    print('Error: $e');
                   }
-                } catch (e) {
-                  print('Error: $e');
-                }
-              },
-              child: Text('Go to Home'),
-            ),
-          ],
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 78, 150, 150),
+                ),
+                child:
+                    Text('Go to Home', style: TextStyle(color: Colors.white)),
+              ),
+            ],
+          ),
         ),
       ),
     );

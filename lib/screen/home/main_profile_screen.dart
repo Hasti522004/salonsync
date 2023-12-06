@@ -6,9 +6,11 @@ import 'package:salonsync/controller/screen_controller/profile_controller.dart';
 import 'package:salonsync/services/firebase_operations.dart';
 import 'package:salonsync/widgets/common_app_bar.dart';
 import 'package:salonsync/widgets/common_bottom_navigation_bar.dart';
+import 'package:salonsync/widgets/sidebar_widget.dart';
 import 'package:salonsync/widgets/textfeild_widget.dart';
 
 class MainProfilePage extends StatelessWidget {
+  
   final _BottomNavbarIndexController = Get.find<BottomNavbarIndexController>();
   final EditProfileController editProfileController =
       Get.put(EditProfileController());
@@ -23,6 +25,7 @@ class MainProfilePage extends StatelessWidget {
       appBar: CommonAppBar(
         title: 'Profile',
       ),
+      endDrawer: CommonDrawer(),
       body: FutureBuilder<Map<String, dynamic>>(
         future: () async {
           String? userId = await firebaseOperation

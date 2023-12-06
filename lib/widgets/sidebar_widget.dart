@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salonsync/controller/userid_record.dart';
@@ -40,10 +41,21 @@ class CommonDrawer extends StatelessWidget {
                 buildDrawerItem('Profile', Icons.person, () {
                   Get.toNamed(AppRoutes.mainprofilePage);
                 }),
-                buildDrawerItem('Add Salon', Icons.add, () {
-                  Get.toNamed(AppRoutes.addSalonPage);
-                  // Handle add salon click
-                }),
+                FutureBuilder<bool>(
+                  future:
+                      _firebaseFunctions.fetchIsAdmin(UserManager.userId ?? ''),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.data == true) {
+                        // Conditionally add "Add Salon" item based on isAdmin
+                        buildDrawerItem('Add Salon', Icons.add, () {
+                          Get.toNamed(AppRoutes.addSalonPage);
+                        });
+                      }
+                    }
+                    return Container();
+                  },
+                ),
                 buildDrawerItem('Add Treatment', Icons.add, () {
                   Get.toNamed(AppRoutes.addTreatmentPage);
                   // Handle add treatment click
@@ -95,6 +107,7 @@ class CommonDrawer extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             _logout();
+
             Get.back();
           },
           child: Text('Logout'),
@@ -112,6 +125,7 @@ class CommonDrawer extends StatelessWidget {
   void _logout() async {
     try {
       await _firebaseFunctions.deleteUserData("${UserManager.userId}");
+      await FirebaseAuth.instance.signOut();
       Get.offAllNamed('/login');
     } catch (e) {
       print('Error during logout: $e');

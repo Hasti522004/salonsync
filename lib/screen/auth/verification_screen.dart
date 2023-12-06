@@ -74,7 +74,7 @@ class VerificationScreen extends StatelessWidget {
                   height: 45,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.green.shade600,
+                      primary: Color.fromARGB(255, 78, 150, 150),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -83,7 +83,10 @@ class VerificationScreen extends StatelessWidget {
                       // Call the verifyOTP function in the controller
                       _verificationController.verifyOTP(verificationId);
                     },
-                    child: Text("Verify Phone Number"),
+                    child: Text(
+                      "Verify Phone Number",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
                 Row(

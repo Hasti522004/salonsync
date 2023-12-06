@@ -5,21 +5,55 @@ import 'package:salonsync/utils/colors.dart';
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final TextEditingController? searchController;
+  final Function(String)? onSearchChanged;
+  final bool showSearchBar;
+  final VoidCallback? onSearchIconPressed;
+  final bool showBackArrow; // Add this property
 
-  const CommonAppBar({Key? key, required this.title}) : super(key: key);
+  const CommonAppBar({
+    Key? key,
+    required this.title,
+    this.searchController,
+    this.onSearchChanged,
+    this.showSearchBar = false,
+    this.onSearchIconPressed,
+    this.showBackArrow = false, // Initialize the property
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ThemeController>(
       builder: (themeController) {
         return AppBar(
-          title: Text(
-            title,
-            style: TextStyle(color: Colors.white),
-          ),
+          automaticallyImplyLeading: showBackArrow, // Show back arrow
+          title: showSearchBar && searchController != null
+              ? TextField(
+                  controller: searchController,
+                  onChanged: onSearchChanged,
+                  decoration: InputDecoration(
+                    hintText: 'Search salon',
+                    prefixIcon: Icon(Icons.search, color: Colors.white),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: TextStyle(color: Colors.white),
+                )
+              : Text(
+                  title,
+                  style: TextStyle(color: Colors.white),
+                ),
           actions: [
+            if (!showSearchBar)
+              IconButton(
+                icon: Icon(Icons.search),
+                color: Colors.white,
+                onPressed: onSearchIconPressed,
+              ),
             IconButton(
               icon: Icon(Icons.menu),
+              color: Colors.white,
               onPressed: () {
                 Scaffold.of(context).openEndDrawer();
               },
@@ -35,5 +69,6 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize =>
+      const Size.fromHeight(kToolbarHeight); // Adjust as needed
 }

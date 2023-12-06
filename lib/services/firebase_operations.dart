@@ -223,4 +223,20 @@ class FirebaseOperation {
       // Handle the error (show a message or log it)
     }
   }
+
+  Future<bool> fetchIsAdmin(String userId) async {
+    try {
+      DocumentSnapshot snapshot = await _firestore.collection('users').doc(userId).get();
+      Map<String, dynamic>? userData = snapshot.data() as Map<String, dynamic>?;
+
+      if (userData != null && userData.containsKey('isAdmin')) {
+        return userData['isAdmin'] as bool;
+      }
+
+      return false; // Default to false if 'isAdmin' is not present or is not a boolean.
+    } catch (e) {
+      print('Error fetching isAdmin: $e');
+      return false;
+    }
+  }
 }

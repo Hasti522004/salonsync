@@ -12,4 +12,5 @@ class AppColors {
   static const Color themeBrown = Color(0xFFB46617);
   static const Color themeYellow = Color(0xFFFFBA00);
   static const Color white = Colors.white;
+  static const Color app_color = Color.fromARGB(255, 78, 150, 150);
 }

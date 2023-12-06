@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Google Maps API Test</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZgQ8E7X-EKQnHuTHc0LZR9k6kw9B-VcQ&callback=initMap"
+        async defer></script>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        function initMap() {
+            // Create a map centered at a specific location
+            var myLatLng = { lat: -34.397, lng: 150.644 };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: myLatLng
+            });
+
+            // Add a marker at the center
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Hello World!'
+            });
+        }
+    </script>
+</body>
+
+</html>
