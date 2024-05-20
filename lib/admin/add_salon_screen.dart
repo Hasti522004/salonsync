@@ -52,7 +52,7 @@ class AddSalonScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 78, 150, 150),
+                    backgroundColor: Color.fromARGB(255, 78, 150, 150),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
                           10.0), // Set border radius for the button
@@ -187,7 +187,7 @@ class AddSalonScreen extends StatelessWidget {
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 78, 150, 150),
+                    backgroundColor: Color.fromARGB(255, 78, 150, 150),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
                           10.0), // Set border radius for the button

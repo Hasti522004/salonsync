@@ -37,7 +37,7 @@ dependencies:
   table_calendar: ^3.0.9
   lottie: ^2.7.0
   pinput: ^3.0.1
-  firebase_core: ^2.19.0
+  firebase_core: ^2.29.0
   firebase_auth: ^4.14.1
   get: ^4.6.6
   cloud_firestore: ^4.13.2
