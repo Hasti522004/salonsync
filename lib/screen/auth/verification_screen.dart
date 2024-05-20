@@ -74,7 +74,7 @@ class VerificationScreen extends StatelessWidget {
                   height: 45,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 78, 150, 150),
+                      backgroundColor: Color.fromARGB(255, 78, 150, 150),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),

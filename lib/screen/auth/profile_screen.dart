@@ -70,7 +70,7 @@ class ProfileScreen extends StatelessWidget {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 78, 150, 150),
+                  backgroundColor: Color.fromARGB(255, 78, 150, 150),
                 ),
                 child: Text(
                   'Add/Change Photo',
@@ -109,7 +109,7 @@ class ProfileScreen extends StatelessWidget {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 78, 150, 150),
+                  backgroundColor: Color.fromARGB(255, 78, 150, 150),
                 ),
                 child:
                     Text('Go to Home', style: TextStyle(color: Colors.white)),
