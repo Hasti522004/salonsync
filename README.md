@@ -102,5 +102,16 @@ Run the application:
 flutter run
 ```
 
+### Photos 
+<img src="https://github.com/Hasti522004/salonsync/assets/93071222/e31749e9-40d4-48fc-8fda-bf45247c777e" width="150" height="300"> <img src="https://github.com/Hasti522004/salonsync/assets/93071222/629b346d-8184-4fc0-909a-ea7cabfe4417" width="150" height="300">
+<img src="https://github.com/Hasti522004/salonsync/assets/93071222/7b9fe263-de2b-4a9b-8ca7-b84f543ddb52" width="150" height="300"> <img src="https://github.com/Hasti522004/salonsync/assets/93071222/3ea14fd2-918a-4b59-95d4-dedd16068a0e" width="150" height="300">
+<img src="https://github.com/Hasti522004/salonsync/assets/93071222/72f387a2-98b5-4839-9290-0de28e9288d9" width="150" height="300"> <img src="https://github.com/Hasti522004/salonsync/assets/93071222/b74b489d-8a82-4877-9662-5745146517cd" width="150" height="300">
+<img src="https://github.com/Hasti522004/salonsync/assets/93071222/5ef36d3d-c988-4341-ba13-284dc7266538" width="150" height="300"> <img src="https://github.com/Hasti522004/salonsync/assets/93071222/b72956a8-d507-4ac6-9c6c-61062174bdbb" width="150" height="300">
+<img src="https://github.com/Hasti522004/salonsync/assets/93071222/c42e58f5-cb70-4b97-b433-81273a31552e" width="150" height="300"> <img src="https://github.com/Hasti522004/salonsync/assets/93071222/cf1ac573-7370-4452-bf1f-872c2be13c92" width="150" height="300">
+<img src="https://github.com/Hasti522004/salonsync/assets/93071222/65fbb1af-9737-4b62-87b9-1125ab60237b" width="150" height="300"> <img src="https://github.com/Hasti522004/salonsync/assets/93071222/511d1891-86f7-4f1a-9db0-59daa55701a2" width="150" height="300">
+<img src="https://github.com/Hasti522004/salonsync/assets/93071222/c352d89e-a8fe-4b75-a9b0-47f82de07498" width="150" height="300"> <img src="https://github.com/Hasti522004/salonsync/assets/93071222/3a1777ee-d3a6-4bc1-993b-bbf4d71fe198" width="150" height="300">
+<img src="https://github.com/Hasti522004/salonsync/assets/93071222/ce4128ad-d167-4ee3-b9d5-4f2a6e44086c" width="150" height="300"> <img src="https://github.com/Hasti522004/salonsync/assets/93071222/382b74ac-9106-4c24-9238-110b5a2cb6d6" width="150" height="300">
+<img src="https://github.com/Hasti522004/salonsync/assets/93071222/a4c80f8c-8dfa-45bc-87ab-46c5e5d8a45b" width="150" height="300"> <img src="https://github.com/Hasti522004/salonsync/assets/93071222/af3af6a6-e274-4144-9c5f-4cc08c108826" width="150" height="300">
+
 ### Conclusion
 SalonSync is not merely an app; it's a transformative force within the beauty and wellness industry. By addressing the evolving needs of modern consumers and salon owners alike, SalonSync positions itself as a catalyst for positive change. As the app continues to evolve, its commitment to innovation, user-centricity, and efficiency will undoubtedly leave an indelible mark on the salon appointment booking landscape.
